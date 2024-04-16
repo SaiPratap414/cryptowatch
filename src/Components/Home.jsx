@@ -34,9 +34,9 @@ const Home = () => {
       fontSize={"6xl"} 
       textAlign={"center"} 
       fontWeight={"thin"} 
-      color={"blue.700"} 
+      color={"blue.800"} 
       mt={"-20"}>
-      CryptoHive</Text>
+      CryptoWatch</Text>
    </Box>
   )
 }
