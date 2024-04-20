@@ -1,28 +1,77 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import Header from "./Components/Header"
-import Home from "./Components/Home"
-import Coins from "./Components/Coins"
-import Exchanges from "./Components/Exchanges"
-import CoinDetails from "./Components/CoinDetails"
-import Footer from "./Components/Footer"
-
+import { createTheme, ThemeProvider } from "@mui/material";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Coin from "./pages/Coin";
+import Compare from "./pages/Compare";
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+import Watchlist from "./pages/Watchlist";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 function App() {
-  return <Router>
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#3a80e9",
+      },
+    },
+  });
 
-<Header>
+  var cursor;
+  var cursorPointer;
 
-</Header>
-    <Routes>
+  useEffect(() => {
+    cursor = document.getElementById("cursor");
+    cursorPointer = document.getElementById("cursor-pointer");
 
-      <Route path = "/" element = {<Home/>}/>
-      <Route path = "/coins" element = {<Coins/>}/>
-      <Route path = "/exchanges" element = {<Exchanges/>}/>
-      <Route path = "/coins/:id" element = {<CoinDetails/>}/>
-    </Routes>
-    <Footer/>
+    document.body.addEventListener("mousemove", function (e) {
+      return (
+        (cursor.style.left = e.clientX + "px"),
+        (cursor.style.top = e.clientY + "px"),
+        (cursorPointer.style.left = e.clientX + "px"),
+        (cursorPointer.style.top = e.clientY + "px")
+      );
+    });
 
-  </Router>
+    document.body.addEventListener("mousedown", function (e) {
+      return (
+        (cursor.style.height = "0.5rem"),
+        (cursor.style.width = "0.5rem"),
+        (cursorPointer.style.height = "3rem"),
+        (cursorPointer.style.width = "3rem")
+      );
+    });
+
+    document.body.addEventListener("mouseup", function (e) {
+      return (
+        (cursor.style.height = "0.3rem"),
+        (cursor.style.width = "0.3rem"),
+        (cursorPointer.style.height = "2rem"),
+        (cursorPointer.style.width = "2rem")
+      );
+    });
+  }, []);
+
+  return (
+    <div className="App">
+      <div className="cursor" id="cursor" />
+      <div className="cursor-pointer" id="cursor-pointer" />
+      <ToastContainer />
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/coin/:id" element={<Coin />} />
+            <Route path="/compare" element={<Compare />} />
+            <Route path="/watchlist" element={<Watchlist />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </div>
+  );
 }
 
 export default App;
